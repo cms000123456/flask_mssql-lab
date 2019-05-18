@@ -32,6 +32,8 @@ def inserttodb(name,number):
     connection.close()
     return (name,number)	
 	
+def updatedb()
+    pass
 	
 css = """<head><style>
 #tab01 {border-collapse: collapse;width: 100%;}
