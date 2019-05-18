@@ -65,8 +65,8 @@ def wanip():
     response = requests.get('https://httpbin.org/ip')
     return 'Your IP is {0}'.format(response.json()['origin'])
 
-@app.route('/db01')
-def db01():
+@app.route('/list')
+def list():
     list = listdb()  + "</body></html>"
     return list
 
@@ -84,6 +84,15 @@ def insert():
         return out
         #return render_template('insert.html')
 
-
+@app.route('/update', methods=['GET','POST'])
+def update():
+    if request.method == 'GET':
+        out = listdb()
+        out = out + render_template('update.html') + "</body></html>"
+        return out
+    if request.method == 'POST':
+        result = updatedb
+        pass
+      
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
