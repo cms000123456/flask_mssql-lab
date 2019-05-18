@@ -41,8 +41,6 @@ css = """<head><style>
 #tab01 th {padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #d580ff;color: white;}
 </style></head>"""
 
-#connection.close()  
-
 @app.route('/')
 def wanip():
     response = requests.get('https://httpbin.org/ip')
@@ -59,14 +57,11 @@ def insert():
         out = listdb()
         out = out + render_template('insert.html')
         return out
-        #return render_template('insert.html')
     if request.method == 'POST':		
         result = inserttodb(name=request.form["name"],number=request.form["number"])
         out = listdb()
         out = out + render_template('insert.html')
         return out
-        #return render_template('insert.html')
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
