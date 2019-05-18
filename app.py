@@ -37,18 +37,21 @@ def inserttodb(name,number):
     connection.close()
     return (name,number)	
 	
-def updatedb(id,data):
+def updatedb(id,name,number):
     connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')
     cursor = connection.cursor()
-    query = """ 
-    UPDATE testtable 
-    SET name = data.name, number = data.number
-    WHERE ID = data.id
-    """
+    query = "UPDATE testtable SET " 
+    if (name):
+        query = query + "name = '{}'".format(name)
+        if (number):
+            query = query + ","
+    if (number):
+        query = query + "number = '{}'".format(number)    
+    query = query + " WHERE ID = {}".format(id)
     cursor.execute(query)
     connection.commit()
     connection.close()
-    pass
+    return (query)
 	
 css = """<head><style>
 #tab01 {border-collapse: collapse;width: 100%;}
@@ -76,13 +79,12 @@ def insert():
         out = listdb()
         out = out + render_template('insert.html') + "</body></html>"
         return out
-        #return render_template('insert.html')
     if request.method == 'POST':		
         result = inserttodb(name=request.form["name"],number=request.form["number"])
         out = listdb()
         out = out + render_template('insert.html') + "</body></html>"
         return out
-        #return render_template('insert.html')
+
 
 @app.route('/update', methods=['GET','POST'])
 def update():
@@ -91,8 +93,11 @@ def update():
         out = out + render_template('update.html') + "</body></html>"
         return out
     if request.method == 'POST':
-        result = updatedb
-        pass
+        result = updatedb(id=request.form["id"],name=request.form["name"],number=request.form["number"])
+        out = listdb()
+        out = out + render_template('update.html') + "</body></html>"
+        #return result
+        return out
       
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
