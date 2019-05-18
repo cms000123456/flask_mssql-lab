@@ -85,7 +85,6 @@ def insert():
         out = out + render_template('insert.html') + "</body></html>"
         return out
 
-
 @app.route('/update', methods=['GET','POST'])
 def update():
     if request.method == 'GET':
@@ -98,6 +97,10 @@ def update():
         out = out + render_template('update.html') + "</body></html>"
         #return result
         return out
-      
+ 
+@app.route('/insupd',methods=['GET','POST'])
+def insupd():
+    pass #insupd.html
+ 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
