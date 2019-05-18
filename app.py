@@ -22,7 +22,7 @@ def listdb():
             s = s + "<td>" + str(x) + "</td>"  
     s = s + "</tr>"
     connection.close()
-    return str("<html>" + css + "<body>" + s + "</body></html>")
+    return str("<html>" + css + "<body>" + s )
 
 def inserttodb(name,number):
     connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')
@@ -41,6 +41,8 @@ css = """<head><style>
 #tab01 th {padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #d580ff;color: white;}
 </style></head>"""
 
+#connection.close()  
+
 @app.route('/')
 def wanip():
     response = requests.get('https://httpbin.org/ip')
@@ -48,20 +50,23 @@ def wanip():
 
 @app.route('/db01')
 def db01():
-    list = listdb()
+    list = listdb()  + "</body></html>"
     return list
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert():
     if request.method == 'GET':
         out = listdb()
-        out = out + render_template('insert.html')
+        out = out + render_template('insert.html') + "</body></html>"
         return out
+        #return render_template('insert.html')
     if request.method == 'POST':		
         result = inserttodb(name=request.form["name"],number=request.form["number"])
         out = listdb()
-        out = out + render_template('insert.html')
+        out = out + render_template('insert.html') + "</body></html>"
         return out
+        #return render_template('insert.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)
