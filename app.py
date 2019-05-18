@@ -7,7 +7,7 @@ import pyodbc
 
 app = Flask(__name__)
 
-connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')# Creating Cursor  
+connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')
 cursor = connection.cursor()  
 cursor.execute("SELECT * FROM testtable")
 column_names = [d[0] for d in cursor.description] 
