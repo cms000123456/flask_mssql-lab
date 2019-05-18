@@ -32,7 +32,9 @@ def inserttodb(name,number):
     connection.close()
     return (name,number)	
 	
-def updatedb()
+def updatedb(id,data):
+    connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')
+    cursor = connection.cursor()  
     pass
 	
 css = """<head><style>
