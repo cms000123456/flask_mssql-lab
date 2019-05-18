@@ -7,6 +7,11 @@ import pyodbc
 
 app = Flask(__name__)
 
+class data:
+    def __init__(self, name, number, id):
+        self.name = name
+        self.number = number
+
 def listdb():
     connection = pyodbc.connect('Driver={SQL Server};Server=.;Database=testdb01;Trusted_Connection=yes')
     cursor = connection.cursor()  
@@ -40,6 +45,9 @@ def updatedb(id,data):
     SET name = data.name, number = data.number
     WHERE ID = data.id
     """
+    cursor.execute(query)
+    connection.commit()
+    connection.close()
     pass
 	
 css = """<head><style>
